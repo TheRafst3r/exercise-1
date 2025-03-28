@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Result</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: grid;
+        grid-template-columns: 2fr 8fr;
+        height: 100vh;
+        background-color: #141a1c;
+        color: white;
+        gap: 15px;
+      }
+      .left-container {
+        background-color: #20292d;
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+      }
+      .right-container {
+        background-color: #20292d;
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+      }
+      .slider-container {
+        position: relative;
+        width: 500px;
+        height: 300px;
+        overflow: hidden;
+      }
+      .image-container {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+      }
+      .before,
+      .after {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+      }
+      .before {
+        background: url("./Images/before.png") no-repeat center/cover;
+      }
+      .after {
+        background: url("./Images/after.png") no-repeat center/cover;
+      }
+      .after-wrapper {
+        position: absolute;
+        width: 50%;
+        height: 100%;
+        overflow: hidden;
+        transition: width 0.3s ease;
+      }
+      .slider {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 4px;
+        height: 100%;
+        background: white;
+        cursor: ew-resize;
+        transform: translateX(-50%);
+      }
+      .advanced-parameters {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+        padding-left: 10px;
+      }
+      .advanced-parameters h2 {
+        grid-column: span 2;
+      }
+      .tick-box div {
+        display: flex;
+        gap: 10px;
+      }
+      .slider-box {
+        width: 70%;
+      }
+      .slider-container {
+        width: 90%;
+        height: 500px;
+        border-radius: 15px;
+      }
+      h2 {
+        font-size: 1rem;
+      }
+      .upload-prompt {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        height: 300px;
+      }
+      .upload-box {
+        width: 90%;
+        height: 60%;
+        background-color: #141a1c;
+        border: 2px dashed gray;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 20px;
+        font-weight: bold;
+        color: gray;
+        text-align: center;
+        border-radius: 8px;
+      }
+      .prompt-box {
+        width: 90%;
+        height: 30%;
+        background-color: #141a1c;
+        border-radius: 8px;
+      }
+      .radio-container {
+        display: flex;
+        gap: 10px;
+      }
+      .photo-slider {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .advanced-parameters input {
+        background-color: #141a1c;
+        border-radius: 5px;
+        height: 20px;
+        color: gray;
+      }
+      .id-text-box {
+        background-color: #141a1c;
+        border-radius: 5px;
+        height: 20px;
+        width: 85%;
+      }
+      button {
+        background-color: #0d6efd;
+        color: white;
+      }
+      .button {
+        padding-top: 20px;
+      }
+      .button button {
+        width: 90%;
+        height: 50px;
+        border-radius: 8px;
+      }
+      .right-header p {
+        color: gray;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="left-container">
+      <div class="upload-prompt">
+        <h2>Upload Image & Set Prompt</h2>
+        <div class="upload-box">Click or drag to upload an image</div>
+        <input
+          class="prompt-box"
+          type="text-box"
+          placeholder="Enter your design prompt here..."
+        />
+      </div>
+      <div class="advanced-parameters">
+        <h2>Advanced Parameters</h2>
+        <div class="sliders">
+          <p>Geometry (0-1)</p>
+          <input
+            class="slider-box"
+            type="number"
+            id="textbox"
+            min="0"
+            max="1"
+            step="0.1"
+            value="0.5"
+          />
+        </div>
+        <div class="sliders">
+          <p>Creativity (0-1)</p>
+          <input
+            class="slider-box"
+            type="number"
+            id="textbox"
+            min="0"
+            max="1"
+            step="0.1"
+            value="0.5"
+          />
+        </div>
+        <div class="sliders">
+          <p>Dynamic (0-1)</p>
+          <input
+            class="slider-box"
+            type="number"
+            id="textbox"
+            min="0"
+            max="1"
+            step="0.1"
+            value="0.5"
+          />
+        </div>
+        <div class="sliders">
+          <p>Sharpen (0-1)</p>
+          <input
+            class="slider-box"
+            type="number"
+            id="textbox"
+            min="0"
+            max="1"
+            step="0.1"
+            value="0.5"
+          />
+        </div>
+      </div>
+      <div class="seed">
+        <p>Seed</p>
+        <input class="id-text-box" type="text-box" placeholder="453463" />
+      </div>
+      <div class="tick-box">
+        <p>Advanced Mode:</p>
+        <div>
+          <input type="checkbox" id="advancedMode" />
+          <p>Enables separate AI calls for more control</p>
+        </div>
+      </div>
+      <div class="radio">
+        <p>API Type:</p>
+        <form class="radio-container">
+          <label>
+            <input type="radio" name="option" value="option1" /> Internal API
+          </label>
+          <br />
+          <label>
+            <input type="radio" name="option" value="option2" /> External API
+          </label>
+        </form>
+      </div>
+      <div class="button">
+        <button>Process design</button>
+      </div>
+    </div>
+    <div class="right-container">
+      <div class="right-header">
+        <h1 contenteditable="true" id="editable-header">Untitled</h1>
+        <p>
+          Transform this room into a modern luxury living room with Scandinavian
+          decor, soft natural lighting, white and beige color tones, minimal
+          gold accents, a sectional sofa, elegant curtains, and indoor plants.
+          Keep the space bright, inviting, and professionally staged.
+        </p>
+      </div>
+      <div class="photo-slider">
+        <div>
+          <button onclick="showBefore()">Before</button>
+          <button onclick="showAfter()">After</button>
+          <button onclick="enableSlider()">Slider</button>
+        </div>
+        <div class="slider-container">
+          <div class="image-container">
+            <div class="before"></div>
+            <div class="after-wrapper">
+              <div class="after"></div>
+            </div>
+            <div class="slider" draggable="true"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    const header = document.getElementById("editable-header");
+
+    // Load saved header text from localStorage
+    header.textContent =
+      localStorage.getItem("headerText") || "Edit this header";
+
+    // Save changes when user edits the header
+    header.addEventListener("input", () => {
+      localStorage.setItem("headerText", header.textContent);
+    });
+  </script>
+  <script>
+    const afterWrapper = document.querySelector(".after-wrapper");
+    const slider = document.querySelector(".slider");
+    let isSliding = false;
+
+    slider.addEventListener("mousedown", () => (isSliding = true));
+    document.addEventListener("mouseup", () => (isSliding = false));
+    document.addEventListener("mousemove", (e) => {
+      if (isSliding) {
+        let rect = document
+          .querySelector(".slider-container")
+          .getBoundingClientRect();
+        let offset = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
+        let percent = (offset / rect.width) * 100;
+        afterWrapper.style.width = percent + "%";
+        slider.style.left = percent + "%";
+      }
+    });
+
+    function showBefore() {
+      afterWrapper.style.width = "0%";
+      slider.style.left = "0%";
+    }
+    function showAfter() {
+      afterWrapper.style.width = "100%";
+      slider.style.left = "100%";
+    }
+    function enableSlider() {
+      afterWrapper.style.width = "50%";
+      slider.style.left = "50%";
+    }
+  </script>
+</html>
